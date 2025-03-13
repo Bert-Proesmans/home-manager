@@ -51,10 +51,11 @@ let
 
 in {
   options.users.users = mkOption {
-    type = types.attrsOf (types.submodule ({name, config, ...}: {
-      config = mkIf (config.enable && cfg.useUserPackages && (lib.hasAttr name cfg.users)) {
-        packages = [cfg.users.${name}.home.path];
-      };
+    type = types.attrsOf (types.submodule ({ name, config, ... }: {
+      config = mkIf
+        (config.enable && cfg.useUserPackages && (lib.hasAttr name cfg.users)) {
+          packages = [ cfg.users.${name}.home.path ];
+        };
     }));
   };
 
