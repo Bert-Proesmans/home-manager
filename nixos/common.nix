@@ -52,8 +52,8 @@ let
 in {
   options.users.users = mkOption {
     type = types.attrsOf (types.submodule ({ name, config, ... }: {
-      config = mkIf
-        (config.enable && cfg.useUserPackages && (lib.hasAttr name cfg.users)) {
+      config = mkIf ((!(lib.hasAttr "enable" config) || config.enable)
+        && cfg.useUserPackages && (lib.hasAttr name cfg.users)) {
           packages = [ cfg.users.${name}.home.path ];
         };
     }));
